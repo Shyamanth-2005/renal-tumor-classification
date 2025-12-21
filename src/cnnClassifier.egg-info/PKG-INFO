@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: cnnClassifier
+Version: 0.0.0
+Summary: A small python package for CNN app
+Home-page: https://github.com/Shyamanth-2005/renal_tumor_classification
+Author: Shyamanth-2005
+Author-email: shyamanthreddy.m@gmail.com
+Project-URL: Bug Tracker, https://github.com/Shyamanth-2005/renal_tumor_classification/issues
+Description-Content-Type: text/markdown
