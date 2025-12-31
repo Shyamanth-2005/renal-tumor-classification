@@ -65,3 +65,125 @@
 [2025-12-31 12:48:03,634: INFO: common: json file saved at: scores.json]
 [2025-12-31 12:48:11,722: WARNING: save: Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 5 of 14). These functions will not be directly callable after loading.]
 [2025-12-31 12:48:12,423: INFO: builder_impl: Assets written to: C:\Users\Shyam\AppData\Local\Temp\tmpdgtsypp6\model\data\model\assets]
+[2025-12-31 15:32:33,110: INFO: main: >>>>> stage Data Ingestion Stage started <<<<<]
+[2025-12-31 15:32:33,130: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:32:33,155: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:32:33,155: INFO: common: created directory at: artifacts]
+[2025-12-31 15:32:33,155: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-12-31 15:32:33,155: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-12-31 15:33:45,782: INFO: data_ingestion: Downloaded data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-12-31 15:34:04,666: INFO: main: >>>>> stage Data Ingestion Stage completed <<<<<
+
+x==========x]
+[2025-12-31 15:34:04,666: INFO: main: >>>>> stage Prepare Base Model started <<<<<]
+[2025-12-31 15:34:04,669: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:34:04,670: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:34:04,670: INFO: common: created directory at: artifacts]
+[2025-12-31 15:34:04,671: INFO: common: created directory at: artifacts/prepare_base_model]
+[2025-12-31 15:34:05,287: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2025-12-31 15:34:05,550: INFO: main: >>>>> stage Prepare Base Model completed <<<<<
+
+x==========x]
+[2025-12-31 15:34:05,551: INFO: main: >>>>> stage Training started <<<<<]
+[2025-12-31 15:34:05,555: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:34:05,559: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:34:05,561: INFO: common: created directory at: artifacts]
+[2025-12-31 15:34:05,562: INFO: common: created directory at: artifacts\training]
+[2025-12-31 15:34:06,055: ERROR: main: [WinError 3] The system cannot find the path specified: 'artifacts\\data_ingestion\\Kidney-ct-scan-image']
+Traceback (most recent call last):
+  File "main.py", line 31, in <module>
+    model_trainer.main()
+  File "c:\users\shyam\desktop\renal_tumor_classification_project\src\cnnClassifier\pipeline\stage_03_model_training.py", line 17, in main
+    training.train_valid_generator()
+  File "c:\users\shyam\desktop\renal_tumor_classification_project\src\cnnClassifier\components\model_training.py", line 36, in train_valid_generator
+    self.valid_generator = valid_datagenerator.flow_from_directory(
+  File "C:\Users\Shyam\anaconda3\envs\renal\lib\site-packages\keras\preprocessing\image.py", line 1648, in flow_from_directory
+    return DirectoryIterator(
+  File "C:\Users\Shyam\anaconda3\envs\renal\lib\site-packages\keras\preprocessing\image.py", line 563, in __init__
+    for subdir in sorted(os.listdir(directory)):
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'artifacts\\data_ingestion\\Kidney-ct-scan-image'
+[2025-12-31 15:37:16,208: INFO: main: >>>>> stage Data Ingestion Stage started <<<<<]
+[2025-12-31 15:37:16,211: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:37:16,212: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:37:16,213: INFO: common: created directory at: artifacts]
+[2025-12-31 15:37:16,213: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-12-31 15:37:16,214: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-12-31 15:38:18,461: INFO: data_ingestion: Downloaded data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-12-31 15:38:31,065: INFO: main: >>>>> stage Data Ingestion Stage completed <<<<<
+
+x==========x]
+[2025-12-31 15:38:31,066: INFO: main: >>>>> stage Prepare Base Model started <<<<<]
+[2025-12-31 15:38:31,069: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:38:31,070: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:38:31,071: INFO: common: created directory at: artifacts]
+[2025-12-31 15:38:31,072: INFO: common: created directory at: artifacts/prepare_base_model]
+[2025-12-31 15:38:31,760: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2025-12-31 15:38:32,035: INFO: main: >>>>> stage Prepare Base Model completed <<<<<
+
+x==========x]
+[2025-12-31 15:38:32,035: INFO: main: >>>>> stage Training started <<<<<]
+[2025-12-31 15:38:32,038: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:38:32,039: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:38:32,040: INFO: common: created directory at: artifacts]
+[2025-12-31 15:38:32,041: INFO: common: created directory at: artifacts\training]
+[2025-12-31 15:38:32,555: ERROR: main: [WinError 3] The system cannot find the path specified: 'artifacts\\data_ingestion\\Kidney-ct-scan']
+Traceback (most recent call last):
+  File "main.py", line 31, in <module>
+    model_trainer.main()
+  File "c:\users\shyam\desktop\renal_tumor_classification_project\src\cnnClassifier\pipeline\stage_03_model_training.py", line 17, in main
+    training.train_valid_generator()
+  File "c:\users\shyam\desktop\renal_tumor_classification_project\src\cnnClassifier\components\model_training.py", line 36, in train_valid_generator
+    self.valid_generator = valid_datagenerator.flow_from_directory(
+  File "C:\Users\Shyam\anaconda3\envs\renal\lib\site-packages\keras\preprocessing\image.py", line 1648, in flow_from_directory
+    return DirectoryIterator(
+  File "C:\Users\Shyam\anaconda3\envs\renal\lib\site-packages\keras\preprocessing\image.py", line 563, in __init__
+    for subdir in sorted(os.listdir(directory)):
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'artifacts\\data_ingestion\\Kidney-ct-scan'
+[2025-12-31 15:43:42,876: INFO: main: >>>>> stage Data Ingestion Stage started <<<<<]
+[2025-12-31 15:43:42,878: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:43:42,880: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:43:42,881: INFO: common: created directory at: artifacts]
+[2025-12-31 15:43:42,881: INFO: common: created directory at: artifacts/data_ingestion]
+[2025-12-31 15:43:42,882: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-12-31 15:44:49,928: INFO: data_ingestion: Downloaded data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2025-12-31 15:45:00,160: INFO: main: >>>>> stage Data Ingestion Stage completed <<<<<
+
+x==========x]
+[2025-12-31 15:45:00,161: INFO: main: >>>>> stage Prepare Base Model started <<<<<]
+[2025-12-31 15:45:00,163: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:45:00,165: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:45:00,165: INFO: common: created directory at: artifacts]
+[2025-12-31 15:45:00,166: INFO: common: created directory at: artifacts/prepare_base_model]
+[2025-12-31 15:45:00,800: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2025-12-31 15:45:01,092: INFO: main: >>>>> stage Prepare Base Model completed <<<<<
+
+x==========x]
+[2025-12-31 15:45:01,092: INFO: main: >>>>> stage Training started <<<<<]
+[2025-12-31 15:45:01,097: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 15:45:01,101: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 15:45:01,103: INFO: common: created directory at: artifacts]
+[2025-12-31 15:45:01,106: INFO: common: created directory at: artifacts\training]
+[2025-12-31 22:30:08,671: INFO: main: >>>>> stage Training completed <<<<<
+
+x==========x]
+[2025-12-31 22:30:08,677: INFO: main: >>>>> stage Evaluation started <<<<<]
+[2025-12-31 22:30:08,690: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 22:30:08,698: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 22:30:08,701: INFO: common: created directory at: artifacts]
+[2025-12-31 22:30:08,703: ERROR: main: 'Evaluation' object has no attribute 'get_base_model']
+Traceback (most recent call last):
+  File "main.py", line 42, in <module>
+    model_evaluation.main()
+  File "c:\users\shyam\desktop\renal_tumor_classification_project\src\cnnClassifier\pipeline\stage_04_model_evaluation.py", line 17, in main
+    evaluation.get_base_model()
+AttributeError: 'Evaluation' object has no attribute 'get_base_model'
+[2025-12-31 22:50:07,222: INFO: main: >>>>> stage Evaluation started <<<<<]
+[2025-12-31 22:50:07,224: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2025-12-31 22:50:07,227: INFO: common: yaml file: params.yaml loaded successfully]
+[2025-12-31 22:50:07,228: INFO: common: created directory at: artifacts]
+[2025-12-31 22:54:30,323: INFO: common: json file saved at: scores.json]
+[2025-12-31 22:54:40,560: WARNING: save: Found untraced functions such as _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op, _jit_compiled_convolution_op while saving (showing 5 of 14). These functions will not be directly callable after loading.]
+[2025-12-31 22:54:41,386: INFO: builder_impl: Assets written to: C:\Users\Shyam\AppData\Local\Temp\tmp0sb8lrlf\model\data\model\assets]
+[2025-12-31 22:56:25,245: INFO: main: >>>>> stage Evaluation completed <<<<<
+
+x==========x]

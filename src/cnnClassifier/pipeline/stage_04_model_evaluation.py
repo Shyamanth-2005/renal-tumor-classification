@@ -14,9 +14,8 @@ class EvaluationPipeline:
     config = ConfigurationManager()
     eval_config = config.get_evaluation_config()
     evaluation = Evaluation(config=eval_config)
-    evaluation.get_base_model()
-    evaluation.train_valid_generator()
-    evaluation.train()    
+    evaluation.evaluation()
+    evaluation.log_into_mlflow()
 
 
 if __name__ == "__main__":
