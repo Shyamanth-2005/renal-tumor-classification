@@ -19,7 +19,7 @@ class ClientApp:
     
 
 # default route
-@app.route("/",method=['GET'])
+@app.route("/",methods=['GET'])
 @cross_origin()
 def home():
   return render_template('index.html')
@@ -28,7 +28,7 @@ def home():
 @cross_origin()
 def train_route():
   os.system("python main.py")
-  os.system("dvc repro")
+  # os.system("dvc repro")
   return "Training done successfully!"
 
 @app.route("/predict",methods=['POST'])
@@ -42,5 +42,5 @@ def predict_route():
 if __name__ == "__main__":
   clApp = ClientApp()
   
-  app.run(host="127.0.0.1",port=8080)
+  app.run(host="127.0.0.1",port=8085, debug=True)
   
