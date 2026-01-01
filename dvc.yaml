@@ -30,12 +30,12 @@ stages:
       - artifacts/prepare_base_model
     params:
       - EPOCHS
-      -IMAGE_SIZE
-      -AUGMENTATION
-      -BATCH_SIZE
+      - IMAGE_SIZE
+      - AUGMENTATION
+      - BATCH_SIZE
     outs:
       - artifacts/training/model.h5
-  
+
   evaluation:
     cmd: python src/cnnClassifier/pipeline/stage_04_model_evaluation.py
     deps:

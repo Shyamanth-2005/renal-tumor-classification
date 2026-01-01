@@ -78,3 +78,13 @@ export MLFLOW_TRACKING_USERNAME=Shyamanth-2005
 export MLFLOW_TRACKING_PASSWORD=1d22cf43202806cbe2bce95333b79a30fa13b1cb
 
 ```
+
+### DVC
+
+- update dvc.yaml
+
+```bash
+dvc init
+dvc repro
+dvc dag
+```

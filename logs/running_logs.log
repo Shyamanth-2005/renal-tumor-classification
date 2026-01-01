@@ -187,3 +187,22 @@ AttributeError: 'Evaluation' object has no attribute 'get_base_model'
 [2025-12-31 22:56:25,245: INFO: main: >>>>> stage Evaluation completed <<<<<
 
 x==========x]
+[2026-01-01 09:08:47,489: INFO: stage_01_data_ingestion: >>>>> stage Data Ingestion Stage started <<<<<]
+[2026-01-01 09:08:47,492: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2026-01-01 09:08:47,494: INFO: common: yaml file: params.yaml loaded successfully]
+[2026-01-01 09:08:47,495: INFO: common: created directory at: artifacts]
+[2026-01-01 09:08:47,495: INFO: common: created directory at: artifacts/data_ingestion]
+[2026-01-01 09:08:47,496: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2026-01-01 09:10:27,926: INFO: data_ingestion: Downloaded data from https://drive.google.com/file/d/1NY__w7jcreT_kem8etYXak-5h8pCEzYK/view?usp=sharing into file artifacts/data_ingestion/data.zip]
+[2026-01-01 09:10:37,991: INFO: stage_01_data_ingestion: >>>>> stage Data Ingestion Stage completed <<<<<
+
+x==========x]
+[2026-01-01 09:15:14,308: INFO: stage_02_prepare_base_model: >>>>>> Stage Prepare Base Model started <<<<<<]
+[2026-01-01 09:15:14,311: INFO: common: yaml file: config\config.yaml loaded successfully]
+[2026-01-01 09:15:14,314: INFO: common: yaml file: params.yaml loaded successfully]
+[2026-01-01 09:15:14,314: INFO: common: created directory at: artifacts]
+[2026-01-01 09:15:14,315: INFO: common: created directory at: artifacts/prepare_base_model]
+[2026-01-01 09:15:15,103: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-01-01 09:15:15,378: INFO: stage_02_prepare_base_model: >>>>>> Stage Prepare Base Model completed <<<<<<
+
+x================x]
