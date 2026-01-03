@@ -88,3 +88,21 @@ dvc init
 dvc repro
 dvc dag
 ```
+
+### Environment activation command
+
+```bash
+(C:\Users\Shyam\anaconda3\shell\condabin\conda-hook.ps1) ;(conda activate renal)
+```
+
+### Environment deactivate command
+
+```bash
+(C:\Users\Shyam\anaconda3\shell\condabin\conda-hook.ps1) ;(conda deactivate)
+```
+
+### How to run the entire program
+
+```bash
+python app.py
+```
