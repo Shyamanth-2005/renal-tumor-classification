@@ -17,6 +17,7 @@
 ## 2. Problem Statement / Research Motivation
 
 ### Problem Statement
+
 Kidney cancer, particularly Renal Cell Carcinoma (RCC), is one of the most common types of cancer affecting the urinary system. Early and accurate detection of renal tumors is critical for effective treatment and improved patient outcomes. Traditional diagnostic methods rely heavily on manual interpretation of CT scans and MRI images by radiologists, which can be:
 
 - **Time-consuming:** Manual analysis of medical images requires significant expertise and time
@@ -25,6 +26,7 @@ Kidney cancer, particularly Renal Cell Carcinoma (RCC), is one of the most commo
 - **Scalability challenges:** Limited availability of expert radiologists in remote or underserved areas
 
 ### Research Motivation
+
 The motivation behind this project stems from:
 
 1. **Clinical Need:** Automated screening tools can assist radiologists in making faster and more accurate diagnoses
@@ -38,6 +40,7 @@ The motivation behind this project stems from:
 ## 3. Objectives of the Project
 
 ### Primary Objectives
+
 1. **Develop an automated binary classification system** to distinguish between:
    - Normal kidney tissue
    - Tumor-affected kidney tissue
@@ -50,6 +53,7 @@ The motivation behind this project stems from:
    - Real-time prediction and inference
 
 ### Secondary Objectives
+
 1. **Implement MLOps best practices** including:
    - Experiment tracking with MLflow
    - Version control with DVC (Data Version Control)
@@ -70,20 +74,25 @@ The motivation behind this project stems from:
 ## 4. Literature Survey / Related Work (Brief)
 
 ### Transfer Learning in Medical Imaging
+
 Transfer learning has proven highly effective in medical image analysis, particularly when labeled medical data is scarce. Pre-trained models like VGG16, ResNet, and Inception have demonstrated superior performance compared to training from scratch.
 
 **Key Findings from Literature:**
+
 - **VGG16 Architecture:** Known for its simplicity and effectiveness in feature extraction from images
 - **Medical Image Classification:** Deep CNNs have achieved radiologist-level performance in various diagnostic tasks
 - **Data Augmentation:** Critical for improving model generalization in medical imaging with limited datasets
 
 ### Related Work
+
 1. **Kidney Tumor Detection:** Previous studies have used various CNN architectures (ResNet, DenseNet, VGG) for kidney tumor classification
 2. **Transfer Learning Success:** Studies show 85-95% accuracy in binary classification tasks using transfer learning
 3. **Clinical Integration:** Growing adoption of AI-assisted diagnostic tools in radiology departments worldwide
 
 ### Research Gap
+
 While significant progress has been made, there remains a need for:
+
 - End-to-end production-ready systems with MLOps integration
 - Comprehensive risk assessment beyond binary classification
 - Accessible deployment solutions for clinical settings
@@ -93,6 +102,7 @@ While significant progress has been made, there remains a need for:
 ## 5. Dataset Description
 
 ### Dataset Overview
+
 - **Source:** Medical imaging dataset obtained from Google Drive
 - **Format:** CT scan images of kidney tissue
 - **Size:** Approximately 57.7 MB (compressed)
@@ -101,6 +111,7 @@ While significant progress has been made, there remains a need for:
   - **Class 1:** Tumor-affected kidney tissue
 
 ### Dataset Structure
+
 ```
 artifacts/data_ingestion/
 └── CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone/
@@ -111,14 +122,16 @@ artifacts/data_ingestion/
 ```
 
 ### Data Characteristics
+
 - **Image Format:** JPEG/PNG medical images
 - **Image Dimensions:** Resized to 224×224×3 (RGB) for VGG16 input
-- **Data Split:** 
+- **Data Split:**
   - Training: 80%
   - Validation: 20%
   - Test: 30% (for evaluation)
 
 ### Data Preprocessing
+
 1. **Normalization:** Pixel values rescaled to [0, 1] range (division by 255)
 2. **Resizing:** All images standardized to 224×224 pixels
 3. **Augmentation:** Applied to training data to improve generalization
@@ -128,6 +141,7 @@ artifacts/data_ingestion/
 ## 6. Current Approach / Baseline Method
 
 ### Traditional Diagnostic Approach
+
 The current baseline for kidney tumor detection involves:
 
 1. **Manual CT Scan Analysis:** Radiologists visually inspect CT images
@@ -135,6 +149,7 @@ The current baseline for kidney tumor detection involves:
 3. **Rule-based Systems:** Expert systems based on predefined diagnostic criteria
 
 ### Limitations of Current Approach
+
 - **Subjectivity:** High inter-observer variability
 - **Time-intensive:** Requires extensive manual review
 - **Limited Scalability:** Dependent on availability of expert radiologists
@@ -145,22 +160,27 @@ The current baseline for kidney tumor detection involves:
 ## 7. Proposed Deep Learning Solution
 
 ### Solution Overview
+
 This project implements a **Transfer Learning-based Deep Learning Pipeline** using VGG16 architecture for automated renal tumor classification.
 
 ### Key Components
 
 #### 7.1 Transfer Learning with VGG16
+
 - **Base Model:** VGG16 pre-trained on ImageNet
 - **Feature Extraction:** Leverages learned features from millions of natural images
 - **Fine-tuning Strategy:** Freeze all convolutional layers, train only custom classification head
 
 #### 7.2 Custom Classification Head
+
 ```
 VGG16 Base (Frozen) → Flatten → Dense(2, softmax) → Binary Classification
 ```
 
 #### 7.3 Data Augmentation Strategy
+
 To address limited medical imaging data:
+
 - **Rotation:** ±40 degrees
 - **Horizontal Flip:** Random horizontal flipping
 - **Width/Height Shift:** ±20%
@@ -168,11 +188,152 @@ To address limited medical imaging data:
 - **Zoom:** ±20% zoom range
 
 ### Advantages Over Traditional Methods
+
 1. **Automated Feature Learning:** No need for manual feature engineering
 2. **High Accuracy:** Leverages powerful pre-trained representations
 3. **Scalability:** Can process thousands of images consistently
 4. **Reproducibility:** Standardized predictions across different settings
 5. **Continuous Improvement:** Model can be retrained with new data
+
+#### 7.4 Machine Learning Risk Inference Model
+
+In addition to the deep learning-based image classification, this project incorporates a **Machine Learning Risk Inference Model** to provide comprehensive clinical risk assessment based on patient data and lifestyle factors.
+
+##### Purpose
+
+The ML risk inference model complements the CT scan analysis by:
+
+- Analyzing patient symptoms, medical history, and lifestyle factors
+- Predicting probability of Renal Cell Carcinoma (RCC) and related conditions
+- Providing a holistic risk assessment beyond image-based classification
+- Supporting clinical decision-making with multi-factorial analysis
+
+##### Dataset Generation
+
+A synthetic clinical dataset of **6,000 patient records** was generated with realistic distributions:
+
+**Symptoms (Binary/Ordinal Features):**
+
+- `hematuria`: Blood in urine (0=No, 1=Yes)
+- `flank_pain`: Pain severity (0=None, 1=Mild, 2=Severe)
+- `lower_back_pain`: Presence of lower back pain
+- `fever`: Presence of fever
+- `loss_of_appetite`: Appetite changes
+- `weight_loss`: Unexplained weight loss
+- `fatigue`: Chronic fatigue
+- `anemia`: Presence of anemia
+
+**Medical History:**
+
+- `hypertension`: High blood pressure history
+- `diabetes`: Diabetes mellitus
+- `ckd`: Chronic Kidney Disease
+- `family_kidney_tumor`: Family history of kidney tumors
+- `family_hypertension`: Family history of hypertension
+
+**Lifestyle Factors:**
+
+- `smoking`: Smoking status (0=Never, 1=Former, 2=Current)
+- `alcohol`: Alcohol consumption (0=None, 1=<7 drinks/week, 2=>7 drinks/week)
+- `bmi`: Body Mass Index (continuous, 16-45 range)
+- `chemical_exposure`: Occupational chemical exposure
+- `physical_activity`: Activity level (0=Low, 1=Moderate, 2=High)
+
+##### Target Variable Logic
+
+The tumor classification follows a clinical scoring system:
+
+```
+Score = hematuria×3 + flank_pain×2 + weight_loss×2 + anemia×2 +
+        smoking + hypertension + ckd + chemical_exposure×2 + (BMI>30)
+
+Classification:
+- Score > 8  → Renal Cell Carcinoma
+- Score > 5  → Benign Renal Mass
+- Score ≤ 5  → No Tumor
+```
+
+##### Model Architecture
+
+**Algorithm:** XGBoost Classifier with Pipeline
+
+**Pipeline Components:**
+
+```
+Input Features (18) → StandardScaler → PCA (95% variance) → XGBClassifier → Output
+```
+
+**Preprocessing:**
+
+1. **StandardScaler:** Normalizes all features to zero mean and unit variance
+2. **PCA:** Dimensionality reduction preserving 95% of variance
+
+**XGBoost Configuration:**
+
+- **Objective:** Binary classification (RCC vs. Non-RCC)
+- **Evaluation Metric:** Log Loss
+- **Random State:** 42 (reproducibility)
+
+##### Hyperparameter Tuning
+
+Grid Search Cross-Validation was employed with the following parameter grid:
+
+| Parameter       | Values Tested |
+| --------------- | ------------- |
+| `n_estimators`  | 100, 200      |
+| `max_depth`     | 3, 5          |
+| `learning_rate` | 0.05, 0.1     |
+
+**Cross-Validation:** 5-fold
+**Scoring Metric:** ROC-AUC
+**Parallel Processing:** Enabled (n_jobs=-1)
+
+##### Model Performance
+
+- **Evaluation Metric:** ROC-AUC Score
+- **Cross-Validation:** Stratified 5-fold
+- **Test Split:** 25% holdout
+
+##### Integration with Flask Application
+
+The trained model is integrated into the web application via the `/analyze_risk` endpoint:
+
+**Input:** JSON payload with patient clinical data
+**Output:**
+
+- CT scan result correlation
+- Identified risk factors with weights
+- Associated conditions probabilities
+- Overall risk score (0-1)
+
+**Risk Factor Weights (Evidence-Based):**
+| Factor | Risk Weight |
+|--------|-------------|
+| Smoking (Current) | 0.63 |
+| Hypertension | 0.71 |
+| Family History (Kidney Tumor) | 0.65 |
+| Obesity (BMI > 30) | 0.58 |
+| Alcohol Abuse | 0.54 |
+| Family History (Hypertension) | 0.49 |
+| Sedentary Lifestyle | 0.45 |
+| Overweight (BMI 25-30) | 0.35 |
+| Chemical Exposure | 0.32 |
+
+##### Fallback Heuristics
+
+When the ML model is unavailable, a rule-based heuristic computes risk:
+
+```python
+score = (hematuria × 0.15) + (flank_pain × 0.1) + (hypertension × 0.1) +
+        (smoking × 0.1) + (family_kidney_tumor × 0.15) + (ckd × 0.15) +
+        (diabetes × 0.1)
+```
+
+##### Model Artifacts
+
+- **Model File:** `artifacts/training/kidney_risk_inference_model.pkl`
+- **Format:** Joblib serialized scikit-learn Pipeline
+- **Dependencies:** scikit-learn, xgboost, joblib
 
 ---
 
@@ -204,19 +365,22 @@ OUTPUT: [P(Normal), P(Tumor)]
 ### Detailed Architecture Specifications
 
 #### VGG16 Base Model
+
 - **Total Parameters:** 14,714,688 (Non-trainable)
 - **Input Shape:** (224, 224, 3)
 - **Weights:** ImageNet pre-trained
 - **Include Top:** False (removed original classification layers)
 
 #### Custom Layers
+
 - **Flatten Layer:** Converts 7×7×512 feature maps to 25,088-dimensional vector
-- **Dense Layer:** 
+- **Dense Layer:**
   - Units: 2 (binary classification)
   - Activation: Softmax
   - Parameters: 50,178 (Trainable)
 
 #### Total Model Statistics
+
 - **Total Parameters:** 14,764,866
 - **Trainable Parameters:** 50,178 (0.34%)
 - **Non-trainable Parameters:** 14,714,688 (99.66%)
@@ -226,34 +390,41 @@ OUTPUT: [P(Normal), P(Tumor)]
 ## 9. Loss Function and Optimizer Selection
 
 ### Loss Function
+
 **Categorical Crossentropy**
 
 **Rationale:**
+
 - Suitable for multi-class classification (even with 2 classes)
 - Measures the difference between predicted probability distribution and true distribution
 - Provides smooth gradients for optimization
 - Well-suited for softmax activation output
 
 **Mathematical Formulation:**
+
 ```
 Loss = -Σ(y_true * log(y_pred))
 ```
 
 ### Optimizer
+
 **Stochastic Gradient Descent (SGD)**
 
 **Configuration:**
+
 - **Learning Rate:** 0.01
 - **Momentum:** Default (0.0)
 - **Nesterov:** False
 
 **Rationale:**
+
 - Stable convergence for transfer learning scenarios
 - Less prone to overfitting compared to adaptive optimizers
 - Effective for fine-tuning pre-trained models
 - Computationally efficient
 
 ### Training Configuration
+
 - **Batch Size:** 16
 - **Epochs:** 10
 - **Validation Split:** 20%
@@ -266,11 +437,13 @@ Loss = -Σ(y_true * log(y_pred))
 ### Primary Metrics
 
 #### 10.1 Accuracy
+
 - **Definition:** Proportion of correct predictions
 - **Formula:** `(TP + TN) / (TP + TN + FP + FN)`
 - **Target:** > 85% on validation set
 
 #### 10.2 Loss
+
 - **Training Loss:** Monitored to ensure model learning
 - **Validation Loss:** Tracked to detect overfitting
 - **Target:** Decreasing trend with minimal train-val gap
@@ -278,25 +451,31 @@ Loss = -Σ(y_true * log(y_pred))
 ### Secondary Metrics (Tracked via MLflow)
 
 #### 10.3 Precision
+
 - Measures accuracy of positive predictions
 - Critical for minimizing false positives in medical diagnosis
 
 #### 10.4 Recall (Sensitivity)
+
 - Measures ability to identify all positive cases
 - Critical for minimizing false negatives (missed tumors)
 
 #### 10.5 F1-Score
+
 - Harmonic mean of precision and recall
 - Provides balanced performance measure
 
 ### MLflow Experiment Tracking
+
 All metrics are logged to MLflow for:
+
 - **Experiment Comparison:** Compare different model configurations
 - **Hyperparameter Tuning:** Track impact of parameter changes
 - **Model Versioning:** Maintain history of model iterations
 - **Reproducibility:** Ensure experiments can be replicated
 
 **Logged Parameters:**
+
 - AUGMENTATION: True/False
 - IMAGE_SIZE: [224, 224, 3]
 - BATCH_SIZE: 16
@@ -306,6 +485,7 @@ All metrics are logged to MLflow for:
 - CLASSES: 2
 
 **Logged Metrics:**
+
 - Training/Validation Loss
 - Training/Validation Accuracy
 
@@ -316,12 +496,14 @@ All metrics are logged to MLflow for:
 ### Scope
 
 #### 11.1 Technical Scope
+
 - **Binary Classification:** Normal vs. Tumor detection
 - **CT Scan Analysis:** Focused on CT imaging modality
 - **Transfer Learning:** Leveraging VGG16 pre-trained weights
 - **Production Deployment:** Flask-based web application
 
 #### 11.2 Functional Scope
+
 - **Automated Prediction:** Real-time tumor classification
 - **Risk Assessment:** Clinical risk factor analysis
 - **MLOps Integration:** Experiment tracking and model versioning
@@ -330,18 +512,21 @@ All metrics are logged to MLflow for:
 ### Limitations
 
 #### 11.3 Dataset Limitations
+
 - **Limited Dataset Size:** Relatively small medical imaging dataset
 - **Binary Classification Only:** Does not distinguish between tumor types (benign vs. malignant)
 - **Single Modality:** Only CT scans, not MRI or ultrasound
 - **Data Diversity:** May not represent all patient demographics
 
 #### 11.4 Model Limitations
+
 - **Black Box Nature:** Limited interpretability of deep learning decisions
 - **Generalization:** Performance may vary on data from different imaging equipment
 - **No Tumor Staging:** Does not provide information about tumor size or stage
 - **Requires Validation:** Needs extensive clinical validation before deployment
 
 #### 11.5 Operational Limitations
+
 - **Not a Replacement:** Intended as a decision support tool, not replacement for radiologists
 - **Regulatory Approval:** Requires FDA/medical regulatory approval for clinical use
 - **Computational Requirements:** Needs GPU for efficient inference
@@ -352,18 +537,21 @@ All metrics are logged to MLflow for:
 ## 12. Expected Outcomes
 
 ### 12.1 Model Performance
+
 - **Target Accuracy:** ≥ 85% on validation set
 - **Consistent Performance:** Low variance across different data splits
 - **Fast Inference:** < 1 second per image prediction
 - **Robust Predictions:** Reliable performance on augmented data
 
 ### 12.2 Clinical Impact
+
 - **Diagnostic Support:** Assist radiologists in faster tumor detection
 - **Screening Tool:** Enable large-scale screening programs
 - **Second Opinion:** Provide automated second opinion for complex cases
 - **Workload Reduction:** Reduce time spent on routine image analysis
 
 ### 12.3 Technical Deliverables
+
 1. **Trained Model:** Production-ready VGG16-based classifier
 2. **MLOps Pipeline:** Complete pipeline with experiment tracking
 3. **Web Application:** Flask-based interface for predictions
@@ -371,6 +559,7 @@ All metrics are logged to MLflow for:
 5. **Version Control:** DVC-tracked data and model versions
 
 ### 12.4 Research Contributions
+
 - **Reproducible Pipeline:** Modular, well-documented codebase
 - **Transfer Learning Validation:** Demonstrate effectiveness in medical imaging
 - **MLOps Best Practices:** Template for medical AI projects
@@ -602,38 +791,47 @@ src/cnnClassifier/
 ### 14.1 Core Technologies
 
 #### Deep Learning Framework
+
 - **TensorFlow 2.12.0:** Primary deep learning framework
 - **Keras API:** High-level neural network API
 
 #### Data Processing
+
 - **NumPy 1.23.5:** Numerical computing
 - **Pandas 1.5.3:** Data manipulation
 - **SciPy 1.10.1:** Scientific computing
 
 #### Machine Learning
-- **Scikit-learn 1.3.2:** ML utilities and risk modeling
+
+- **Scikit-learn 1.3.2:** ML utilities, pipelines, and preprocessing
+- **XGBoost:** Gradient boosting for risk inference model
 - **Joblib:** Model serialization
 
 ### 14.2 MLOps & Experiment Tracking
+
 - **MLflow 2.2.2:** Experiment tracking and model registry
 - **DVC:** Data version control
 - **DagsHub:** Remote MLflow tracking server
 
 ### 14.3 Web Framework
+
 - **Flask 2.3.3:** Web application framework
 - **Flask-CORS:** Cross-origin resource sharing
 
 ### 14.4 Utilities
+
 - **PyYAML:** Configuration management
 - **python-box 6.0.2:** Box notation for configs
 - **gdown:** Google Drive file download
 - **tqdm:** Progress bars
 
 ### 14.5 Visualization
+
 - **Matplotlib:** Plotting library
 - **Seaborn:** Statistical visualization
 
 ### 14.6 Development Tools
+
 - **Jupyter Notebook 6.5.7:** Interactive development
 - **Git:** Version control
 - **Python 3.8:** Programming language
@@ -686,13 +884,16 @@ renal_tumor_classification_project/
 This project demonstrates a comprehensive approach to medical image classification using deep learning and modern MLOps practices. By leveraging transfer learning with VGG16, the system achieves efficient and accurate renal tumor detection while maintaining a modular, scalable architecture.
 
 ### Key Achievements
+
 1. **Modular Pipeline:** Well-structured, reproducible training pipeline
 2. **Transfer Learning:** Effective use of pre-trained models for medical imaging
 3. **MLOps Integration:** Experiment tracking and version control
 4. **Production Deployment:** User-friendly web interface for clinical use
 5. **Comprehensive Documentation:** Detailed technical and research documentation
+6. **Hybrid AI Approach:** Combination of deep learning (VGG16) for image analysis and machine learning (XGBoost) for clinical risk assessment
 
 ### Future Enhancements
+
 1. **Multi-class Classification:** Distinguish between tumor types (benign, malignant, cyst, stone)
 2. **Model Ensemble:** Combine multiple architectures for improved accuracy
 3. **Explainability:** Integrate Grad-CAM for visual explanations
