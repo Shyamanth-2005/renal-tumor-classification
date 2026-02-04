@@ -2,9 +2,13 @@ from flask import Flask, request, jsonify, render_template
 import os
 import joblib
 import numpy as np
+import warnings
 from flask_cors import CORS, cross_origin
 from cnnClassifier.utils.common import decodeImage
 from cnnClassifier.pipeline.prediction import PredictionPipeline
+
+# Suppress sklearn version warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
 
 
 os.putenv('LANG','en_US.UTF-8')
@@ -15,10 +19,14 @@ CORS(app)
 
 # Load the risk inference model
 try:
-    risk_model = joblib.load(r"artifacts/training/kidney_risk_inference_model.pkl")
-except:
+    # Suppress warnings during model loading
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning)
+        risk_model = joblib.load(r"artifacts/training/kidney_risk_inference_model.pkl")
+    print("Risk model loaded successfully")
+except Exception as e:
     risk_model = None
-    print("Warning: Risk model not found")
+    print(f"Warning: Risk model not found - {str(e)}")
 
 
 class ClientApp:
@@ -37,12 +45,56 @@ def home():
 @cross_origin()
 def predict_route():
     try:
+        # Check if request contains JSON data
+        if not request.json:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        # Check if image data exists
+        if 'image' not in request.json:
+            return jsonify({"error": "No image data found in request"}), 400
+
         image = request.json['image']
-        decodeImage(image, clApp.filename)
+
+        # Validate that image data is not empty
+        if not image or len(image.strip()) == 0:
+            return jsonify({"error": "Image data is empty"}), 400
+
+        # Decode and save image
+        try:
+            decodeImage(image, clApp.filename)
+        except Exception as decode_error:
+            print(f"Error decoding image: {str(decode_error)}")
+            return jsonify({"error": f"Failed to decode image: {str(decode_error)}"}), 400
+
+        # Check if the file was properly created
+        if not os.path.exists(clApp.filename):
+            return jsonify({"error": "Failed to save decoded image"}), 400
+
+        # Check if the file is empty
+        if os.path.getsize(clApp.filename) == 0:
+            return jsonify({"error": "Decoded image is empty"}), 400
+
+        # Make prediction
         result = clApp.classifier.predict()
+
+        # Check if prediction returned an error
+        if isinstance(result, list) and len(result) > 0 and 'error' in result[0]:
+            return jsonify(result), 400
+
+        # Clean up the temporary image file
+        if os.path.exists(clApp.filename):
+            os.remove(clApp.filename)
+
         return jsonify(result)
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        print(f"Error in predict_route: {str(e)}")
+        # Clean up the temporary image file in case of error
+        try:
+            if os.path.exists(clApp.filename):
+                os.remove(clApp.filename)
+        except:
+            pass  # Ignore cleanup errors
+        return jsonify({"error": f"Prediction failed: {str(e)}"}), 500
 
 @app.route("/analyze_risk", methods=['POST'])
 @cross_origin()

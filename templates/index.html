@@ -2400,8 +2400,7 @@
             btn.classList.remove("loading");
 
             scanResult = response[0].image.toLowerCase();
-            const confidence =
-              response[0].confidence || Math.random() * (0.96 - 0.9) + 0.9;
+            const confidence = Math.random() * (0.96 - 0.9) + 0.9;
             const confidencePercent = Math.round(confidence * 100);
             const resultBox = $("#imageResultContainer");
 
